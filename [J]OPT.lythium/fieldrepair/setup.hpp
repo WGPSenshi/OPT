@@ -3,7 +3,7 @@
 #define STR_FIELD_REPAIR "Feldreparatur"
 #define STR_CANCEL_ACTION "Aktion abbrechen"
 #define STR_SERIOUS_REPAIR "Komplettreparatur"
-#define STR_REPAIR_CONDITIONS "Zustand zu schlecht"
+#define STR_REPAIR_CONDITIONS "Feldreparatur nicht möglich, Zustand zu schlecht"
 #define STR_ANOTHER_ACTION "Andere Aktion im Gange!"
 #define STR_NEED_TOOLKIT "Du hast keine weiteren Ersatzteile parat, besorge einen Pionier, um zu reparieren!"
 #define STR_REPAIR_INTERRUPTED "Reparatur unterbrochen"

@@ -35,9 +35,7 @@ if (!(typeOf player in GVARMAIN(pioniers)) and (_veh getVariable [QGVAR(longRepa
 
 GVAR(mutexAction) = true;
 
-player selectWeapon primaryWeapon player;    // psycho, animation only able to play while primary weapon is in use
-sleep 1;
-private _lastPlayerState = animationState player;
+// player selectWeapon primaryWeapon player;    // psycho, animation only able to play while primary weapon is in use
 
 // player playActionNow "medicStartRightSide";
 player playMove "Acts_carFixingWheel";
@@ -50,7 +48,6 @@ private _startTime = time;
 if (_veh getVariable [QGVAR(repTimeLeft), 0] > 0) then {
     _maxlength = (_veh getVariable QGVAR(repTimeLeft)) max 10; // reduce max length
 };
-
 /*        
     * Arguments:
     * 0: Total Time (in game "time" seconds) <NUMBER>
@@ -63,23 +60,31 @@ if (_veh getVariable [QGVAR(repTimeLeft), 0] > 0) then {
 */
 [
     _maxlength,
-    [_veh, _startTime, _maxlength],
+    [_veh, _startTime, _maxlength, _lastPlayerState],
     {
         (_this select 0) params ["_veh"];
 
-        player switchMove "";
         ["Feldreparatur", STR_REPAIR_FINISHED, "green"] call EFUNC(gui,message);
 
         [_veh] remoteExecCall [QFUNC(partRepair), _veh, false]; // called where vehicle is local!
 
         _veh setVariable [QGVAR(longRepairTimes), (_veh getVariable [QGVAR(longRepairTimes), 0]) + 1 , true ];
         _veh setVariable [QGVAR(repTimeLeft), 0, true];
+        player switchMove "AmovPknlMstpSrasWrflDnon";
     },
     {   
         (_this select 0) params ["_veh", "_startTime", "_maxlength"];
 
+
         ["Feldreparatur", STR_REPAIR_INTERRUPTED, "red"] call EFUNC(gui,message);
-        _veh setVariable [QGVAR(repTimeLeft), _maxlength - (time - _startTime), true];
+        // TODO: This should always reset if new damage is taken. This is currently not taken into account.
+        // Probably need to store last known dmg score and compare if increased when repair is started.
+        if (_maxlength < time - _starttime + 0.2 * _maxlength) then {
+            _veh setVariable [QGVAR(repTimeLeft), _maxlength, true];
+        } else {
+            _veh setVariable [QGVAR(repTimeLeft), time - _startTime + 0.2 * _maxlength, true];
+        };
+        player switchMove "AmovPknlMstpSrasWrflDnon";
     },
     format[STR_REPAIR_MSG_STRING, _maxlength, _vehname],
     {

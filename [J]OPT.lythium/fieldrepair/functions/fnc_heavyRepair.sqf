@@ -53,6 +53,7 @@ private _length = _maxlength;
         (_this select 0) params ["_veh", "_truck"];
 
         ["Feldreparatur", STR_REPAIR_FINISHED, "green"] call EFUNC(gui,message);
+        systemChat _veh;
         [_veh] remoteExecCall [QFUNC(fullRepair), _veh, false]; // called where vehicle is local!
         _truck setVariable [
             QGVAR(repair_cargo), 
