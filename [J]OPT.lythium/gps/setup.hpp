@@ -1,11 +1,8 @@
-#define MARKER_REFRESH 1
-#define MARKER_SYMBOL "mil_triangle"
-#define MARKER_SIZE [0.8, 0.8]
-#define MARKER_ALPHA 0.6
+// hier bitte alle Variablen anlegen, die man in irgendeiner Weise
+// einstellen können soll oder irgendwann mal ändern will
+// Beispiele: Add-Action Texte, Variablen, Konstanten, Marker etc
+#define GPS_NUMBER_MARKER 40
 
-// player marker settings
-#define MARKER_PLAYER_SYMBOL "mil_circle"
-#define MARKER_PLAYER_COLOR "ColorBrown"
-
-// wenn nicht auskommentiert, kann in den Parametern eingestellt werden, ob HL alle Einheiten auf der Kate sieht oder nur Gruppenführer.
-#define __SHOW_ALL_UNITS__
+#define FAR_REVIVE_MARKER_TYPE "loc_Hospital"
+#define FAR_REVIVE_MARKER_COLOR "ColorRed"
+#define FAR_REVIVE_MARKER_ALPHA 0.7
