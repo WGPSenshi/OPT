@@ -1,5 +1,109 @@
 ﻿# Changelog
 
+## 1.4.15.6
+
+### Skript
+
+- Radar
+  - Bugfix: Abhängigkeit zwischen Radarcontainer NATO und CSAT behoben. Wenn der Container einer Fraktion zerstört wird, hat dies keine Auswirkungen mehr auf die andere Seite
+- Warehouse
+  - Bugfix Dispokredit: Es gab einen Fehler beim Kaufen von Fahrzeugen, der den Dispokredit der Gegenfraktion abgefragt hat, statt den eigenen Dispokredit. Dadurch konnte man nichts mehr kaufen, obwohl der Gegner im Minus war.
+
+### Editor
+
+## 1.4.15.5
+
+### Skript
+
+- Intro
+  - ~~überarbeitete Intro-Version mit kürzerer Laufzeit und Kamerafahrt auf Gruppen statt einzelne Spieler~~
+  - altes Intro wieder eingebaut, dafür wurde die Zeit für die Spielernamen dynamisch angepasst
+- Respawn
+  - Kosten werden wieder korrekt berechnet, abgezogen und geloggt
+- Fieldrepair
+  - Eintrag für die Feldreparatur ist nur noch sichtbar, wenn der Soldat den Schaden auch beheben kann. Bei Schäden an schweren Teilen folglich kein Eintrag für Feldreparatur, außer im Sonderfall von Geschützen und auch nur für den Ingenieur. Ingenieur hat den Eintrag zur Komplettreparatur oder Soldat, wenn Rep-LKW in der Nähe, sobald ein bel. Part am Fahrzeug beschädigt ist
+  - Feldreparatur setzt sich nach Komplettreparatur zurück
+  - Gläser und andere Kleinteile werden nicht mehr bei der Reparaturzeit berücksichtigt
+- Merge mit der Trainingsversion
+  - Hunter und Ifrit HMG wieder an Radfahrzeugpad und ohne crew-beschränkung
+  - quilin AT in cargo gefixt (falscher classname)
+  - Beams auf 3 für Beampositest (für schlacht rückgängig gemacht!)
+  - Ingenieur bzw pionier_F in setupclassnames nachgetragen
+  - Kauflisten und Preise angepasst (Mun-container raus, div. Preisanpassungen bei kisten etc)
+  - classname MAAWS in setuprclassnames launcherteil gefixt
+  - TFAR-script funkkanäle CSAT erneut angepasst
+- HUD
+  - HUD zeigt wieder Freezetime getrennt von Waffenruhe in blau an
+- LOG
+  - Log gibt alle Log Einträge jetzt bezogen auf reine Spielzeit aus, d.h. die FreezeTime wird jeweils abgezogen, daher startet der Log nun nicht bei 0 sondern -freezeTime, dafür sind alle Zeitangaben jetzt identisch mit der reinen Spielzeit, Beginn Waffenruhe
+- Freeze & Serverclock
+  - Freeze ist nun wieder separat von Waffenruhe und Spielzeit getrennt
+  - Freeze gilt nun nur noch zeitlich, ist also nicht mehr an das Intro gekoppelt
+  - Serverclock überarbeitet, um freezeTime zu berücksichtigen
+  - Bugfixes mit diversen Fehlern in der Zeitberechnung
+
+### Editor
+
+- CSAT-Radarcontainer-Modell getauscht
+- ACE-Spaten an Sprengmeisterslots verteilt, da nicht mehr in Ausrüstungskiste
+- ACE-Dreibein an Sniper verteilt (Wunsch aus der NATO)
+- Einheiten komplett neu sortiert und aufgestellt (CSAT und NATO-Wunschliste und Squadaufteilung)
+- Piloten einzeln gestellt wegen GPS-Kennung
+- Ausrüstungskisten gegen neue Modelle getauscht wegen Fixes im Inventar (FAKs, Fallschirme und LR-Funke) - auf NATO wohl noch immer falsche LR-funken drin (muss ich erneut checken und fixen!)
+- Bilder der Funktabellen in den Basen getauscht - NATO <-> CSAT
+- ZEUS für Infer gesetzt (CSAT-Alpha muss nochma!) bzw musste ich rausnehmen, da irgendwie trotz abgeschaltetem Trainmodus aktiv!
+- Grenzmarkerordner gelöscht! muss rückgängig, wenn Scriptlösung am Start oder dort verbaut!
+- Beamliste Marine rausgenommen - muss wieder rein, wenn Posi geklärt!
+- CBA-settings neu gesetzt und exportiert und in cba_settings.sqf und überall! (komplettrep auf 90, waffenruhe +2 wegen intro, div. andre anpassungen) - FALLSCHIRM GING NICHT UNTER 5!
+
+## 1.4.15.3
+
+### Skript
+
+- Intro
+  - Refactoring des Codes in neue Komponente + Codeoptimierungen.
+  - Neugestaltung des Intro mit Kamera auf Gruppen
+- Freeze
+  - Refactoring des Codes in neue Komponente + Codeoptimierungen.
+  - Freeze und Intro sind nur im Schlachtmodus gültig, im Trainingsmodus haben sie keine Bedeutung. Wenn Freeze aktiviert wird, ist Freeze entweder für die Dauer des Intros oder für die Dauer in den CBA Settings aktiv.
+  - ACHTUNG: Freeze friert Spieler ab sofort komplett ein (disableUserInput), d.h. ihr könnt auch nicht mehr mit ESC ins Spielmenü. Bitte nicht in Panik verfallen.
+- Serverclock
+  - Freeze wird nicht mehr länger vor der Waffenruhe ausgeführt, sondern währenddessen
+- Slotsperre
+  - Komplett überarbeitet und aus Mission ausgegliedert in eigene Komponente classlock.
+  - Neue CBA Settings für Speere von Schützenplätzen
+  - Es gibt damit jetzt 3 Sperren: Pilotslots (Fahrer Air), Schwere Fahrzeugslots (Fahrer in crew_vecs oder Fahrzeugen vom Typ "Tank") und Gunnerslots (Schützen in allen Fahrzeugen und statischen Geschützen)
+- GPS
+  - Settings für HL entfernt (Ofiziere immer im GPS Modus 2).
+  - Zusatz-Information für SQL-Marker auf Gruppen-ID geändert
+- Revive
+  - Einheitliche Dauer für Stabilisieren u Revive
+  - neue Settings für die verschiedenen Behandlungsdauern
+  - überflüssige Settings entfernt
+  - Kosten für Respawn werden nun dynamisch berechnet und sinken linear mit der Bleedout Zeit
+  - Bugfix: Nächster Sanitäter wird wieder korrekt angezeigt
+- FPS:
+  - Server FPS werden nun mitgeloggt unter dem Namen "SERVER"
+- Autoparachute:
+  - Neue Komponente, die BackpackOnChest ablöst: Spieler bekommen automatisch einen Fallschirm, wenn sie aus einem Flugzeug oder Helikopter springen.
+  - Fallschirm wird entweder per Mausradmenü geöffnet oder automatisch, sobald der Spieler die Höhe für automatische Reißleine erreicht.
+  - Automatische Reißleinhöhe sowie Zeit bis zum Öffnen sind per CBA Settings einstellbar.
+  - Der Fallschirm wird automatisch beim Landen entfernt.
+  - Rucksack bleibt die ganze Zeit normal auf dem Rücken, kein Wechsel mehr notwendig.
+- Fieldrepair:
+  - Einträge sind aus dem Mausradmenü ins ACE-Menü gewandert.
+  - Komplettreparatur muss nicht mehr länger aus dem Rep-LKW aufgerufen werden, jetzt ebenfalls am Fahrzeug verfügbar, falls ein Rep-LKW in der Nähe ist (siehe CBA-Settings).
+  - Bugfix: BI-Vanilla System: ist wieder deaktiviert, d.h. Rep-LKW und Container haben keine BI Repair-Funktion mehr, nur noch OPT Repair System.
+  - Bugfix: Feuermodus wird nach der Feldreparatur wieder korrekt hergestellt (Burst oder Vollautomatik)
+- Berggang:
+  - Ab sofort als eigenständige Komponente in der Mission und nicht mehr in der Mod.
+  - Berggang ist für alle Fahrzeuge (Rad und Kette) verfügbar. Es gibt umfangreiche CBA Settings, die sowohl den Berggag als auch den Zugriff steuern.
+  - Berggang steht nur dem Fahrer zur Verfügung, wenn das Fahrzeug eine gewisse Geschwindigkeit nicht überschritten hat, wenn es eine Mindeststeigung bewältigen muss und wenn Kette oder Rad nicht zu stark beschädigt sind.
+- Sectorcontrol
+  - Minensperrzone blockiert nun auch Gräben (ACE trenches). Gräben werden in der Sperrzone blockiert. Gräben, die außerhalb der Sperrzone gestartet und innerhalb gebaut werden, werden ebenfalls gelöscht
+- Log
+  - Ab sofort werden für das Kommandcenter die Anzhahl der Spieler pro Seite mitgeloggt
+
 ## 1.4.15
 
 ### Skript
@@ -9,9 +113,20 @@
 - Freeze: Freeze nun wieder aktiv (war vorrübergehend wirkungslos)
 - Intro: Fehler in Anzeige der Autoren behoben
 - Revive: Marker für bewusstlose Einheiten werden jetzt vom GPS-System gehandhabt, d.h. in Echtzeit aktualisiert. Dadurch kommt es nicht mehr zu "Ghost"-Markern an falscher Stelle
+- Waffenwechsel: Komponente wurde überarbeitet und in einzelne Funktionen aufgeteilt. Einige Fehler aus dem Forum behoben.
+- Kritischer Bugfix #45: Fahne kann nicht mehr länger per Hotkey aus der Entfernung gezogen werden
+- Flip: Bugfix #49 sowie Refactoring in der Komponente Flip. Fahrzeuge und Flugzeuge können wieder umgedreht werden, falls sie schief liegen oder umgekippt sind
+- Waffenwechsel: #51 Weitere Bugfixes durch Lord
+  - Bei einigen Fahrzeuge wurde beim Waffenwechselsystem Loadout noch einigen falsches Magazin geladen.
+  - Heli verlieren nicht mehr ihre Flears bei bewaffnen
+  - Nicht erkannte  Fahrzeuge erzeuge eine Fehlermeldung
+- Radar: Neue Formel und CBA Settings
 
 ### Editor
 
+- Neue Basismission auf Altis für Missionsbauer
+- Änderungen an den Basen von oppa
+- vorübergehende Bilder im assets/paa Ordner für die Schilder
 
 ## 1.4.14
 
@@ -21,7 +136,7 @@
 - Flagpositions (für die prologschlacht) -> setupflagpositions.sqf
 - Beampositionen (für die prologschlacht) -> setupbeamorte.sqf
 - Beamfix aus github dev-bereich (sollte in deiner letzten version ja schon mit drin sein)
-- TFAR-settings für kanäle neu gesetzt 
+- TFAR-settings für kanäle neu gesetzt
 - Addonsettings - sind glaub eh in der mission mit drin von daher zu vernachlässigen! check ich dann alles nochmal neu und speicher das profil! wenn dir da ein weg zufliegt, dass als ...settings.sqf direkt in die mission zu packen, wär super!
 - cargosystem für modupdate angepasst -> setcargoandspace.sqf
 - warehouse für modupdate angepasst -> setupvehiclepool.sqf
@@ -60,7 +175,7 @@
 - Fieldrepair: Funktioniert wieder für alle gespawnten Fahrzeuge. Umstieg von servercall auf clientcall
 - Sectorcontrol: Bugfix: HL kann keine Feindflagge mehr wählen
 - Beam: Abschalten der Komponente erlaubt noch Beamen zu Orten mit Level -1 (Marinebasen)
-- Waffenwechsel: Ich habe das Modul etwas umgeschrieben , damit du alles in der fnc_waffenconfig.sqf einstellen kann. du brauchst nicht mehr in der fnc_onLoadDialog.sqf was bearbeiten. Das müssen wir erster machen wenn sich gurndlegen etwas ändert oder neue Fahrzeuge hinzugefügt werden müssen. Die Boxen werden nun dynamisch beschrifte, so das man weis was es für eine box ist. Die Textmeldung ist jetzt wieder lokal und die Offiziere bekommt es Extra Meldung wer was gekauft hat. Und ich habe eine möglichen Fehler durch die Umstellung von James behoben , das das Geld nicht abgezogen wird. Das muss noch mal auf dem Server getestet werden zu Sicherheit. 
+- Waffenwechsel: Ich habe das Modul etwas umgeschrieben , damit du alles in der fnc_waffenconfig.sqf einstellen kann. du brauchst nicht mehr in der fnc_onLoadDialog.sqf was bearbeiten. Das müssen wir erster machen wenn sich gurndlegen etwas ändert oder neue Fahrzeuge hinzugefügt werden müssen. Die Boxen werden nun dynamisch beschrifte, so das man weis was es für eine box ist. Die Textmeldung ist jetzt wieder lokal und die Offiziere bekommt es Extra Meldung wer was gekauft hat. Und ich habe eine möglichen Fehler durch die Umstellung von James behoben , das das Geld nicht abgezogen wird. Das muss noch mal auf dem Server getestet werden zu Sicherheit.
 - Service-Pad: Bugfix: Pad wieder funktionstüchtig. Neue Kosten für Repair und Refuel in den CBA Settings einstellbar. Neue Meldung, dass Motor abgestellt werden muss. Neue Prüfungen für die Aktionmenüeinträge, wird nur noch angezeigt, wenn Fahrzeug beschädigt oder nicht 100% Treibstoff.
 - Beam: Bugfix: Aufruf des Beam-Dialog nicht mehr möglich, wenn Kisten gezogen oder getragen werden
 - Sectorcontrol: Flaggen besitzen jetzt einen Marker für die Minensperrzone (per Skript)
@@ -102,8 +217,8 @@
 - Deadmanswitch: work on [#18](https://github.com/Jamesadamar/OPT/issues/17): Bei Bewusstlosigkeit werden alle Sprengladungen mit Deadmanswitch gezündet und der Trigger aus dem Inventar gelöscht
 - Log: work on [#17](https://github.com/Jamesadamar/OPT/issues/18) Kill-Log überarbeitet, nun mit Angabe des Magazines sowie Anpassung der Log-Zeile auf neuen Standard (vehicle:)(side:)(magazine:)(category:)
 - Log: work on [#17](https://github.com/Jamesadamar/OPT/issues/18) Kill-Log überarbeitet für den Fall Fahrzeugabschuss durch Fahrzeug: Jetzt wird der gesamten Besatzung ein Kill angerechnet.
-- Merge mit Schlachtversion #9, Anpassung an diversen Skripten wie setupbeamorte, setupflagpositons, setupcargosizeandspace 
-- Radar: work on [#27](https://github.com/Jamesadamar/OPT/issues/27) Bugfix im Radar-Modul, jetzt ist es wieder möglich, mit dem Feindradar zu interagieren 
+- Merge mit Schlachtversion #9, Anpassung an diversen Skripten wie setupbeamorte, setupflagpositons, setupcargosizeandspace
+- Radar: work on [#27](https://github.com/Jamesadamar/OPT/issues/27) Bugfix im Radar-Modul, jetzt ist es wieder möglich, mit dem Feindradar zu interagieren
 
 ## 1.4.9
 
